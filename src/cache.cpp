@@ -63,7 +63,43 @@ int lru(int cache_capacity, int num_requests, std::vector<std::string> requestSe
     return num_misses;
 }
 int opt(int cache_capacity, int num_requests, std::vector<std::string> requestSet){
-
+        std::vector<std::string> cache;
+    int num_misses = 0;
+    for(int i = 0; i < num_requests; i++){
+        int pos = find(cache, requestSet[i]);
+        if(cache.size() < cache_capacity){
+            if(pos == -1){ // cache miss
+                cache.push_back(requestSet[i]);
+                num_misses++;
+            }
+        }
+        else{
+            if(pos == -1){ // cache miss
+                std::vector<int> furthest_future;
+                for(int j = 0; j < cache.size(); j++){
+                    bool found = false;
+                    for(int k = requestSet.size()-1; k > i; k--){
+                        if(cache[j] == requestSet[k]){
+                            furthest_future.push_back(k-i);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found){
+                        furthest_future.push_back(2147483647);
+                    }
+                }
+                int to_erase = 0;
+                for(int j = 0; j < furthest_future.size()-1; j++){
+                    if(furthest_future[to_erase] < furthest_future[j])to_erase = j;
+                }
+            cache.erase(cache.begin() + to_erase);
+            cache.push_back(requestSet[i]);
+            num_misses++;
+            }
+        }
+    }
+    return num_misses;
 }
 std::vector<std::string> split(const std::string& str, char delimiter) {
     std::vector<std::string> tokens;
