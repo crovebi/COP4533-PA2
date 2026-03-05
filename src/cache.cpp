@@ -13,7 +13,25 @@ int find(std::vector<std::string> requestSet, std::string str){
     return -1;
 }
 int fifo(int cache_capacity, int num_requests, std::vector<std::string> requestSet){
-
+    std::vector<std::string> cache;
+    int num_misses = 0;
+    for(int i = 0; i < num_requests; i++){
+        int pos = find(cache, requestSet[i]);
+        if(cache.size() < cache_capacity){
+            if(pos == -1){ // cache miss
+                cache.push_back(requestSet[i]);
+                num_misses++;
+            }
+        }
+        else{
+            if(pos == -1){ // cache miss
+            cache.pop_back();
+            cache.push_back(requestSet[i]);
+            num_misses++;
+            }
+        }
+    }
+    return num_misses;
 }
 int lru(int cache_capacity, int num_requests, std::vector<std::string> requestSet){
 
