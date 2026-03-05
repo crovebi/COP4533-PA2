@@ -34,7 +34,33 @@ int fifo(int cache_capacity, int num_requests, std::vector<std::string> requestS
     return num_misses;
 }
 int lru(int cache_capacity, int num_requests, std::vector<std::string> requestSet){
-
+    std::vector<std::string> cache;
+    int num_misses = 0;
+    for(int i = 0; i < num_requests; i++){
+        int pos = find(cache, requestSet[i]);
+        if(cache.size() < cache_capacity){
+            if(pos == -1){ // cache miss
+                cache.insert(cache.begin(), requestSet[i]);
+                num_misses++;
+            }
+            else{
+                cache.erase(cache.begin() + pos);
+                cache.insert(cache.begin(), requestSet[i]);
+            }
+        }
+        else{
+            if(pos == -1){ // cache miss
+            cache.pop_back();
+            cache.insert(cache.begin(), requestSet[i]);
+            num_misses++;
+            }
+            else{
+                cache.erase(cache.begin() + pos);
+                cache.insert(cache.begin(), requestSet[i]);
+            }
+        }
+    }
+    return num_misses;
 }
 int opt(int cache_capacity, int num_requests, std::vector<std::string> requestSet){
 
