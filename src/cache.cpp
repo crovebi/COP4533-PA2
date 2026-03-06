@@ -25,7 +25,7 @@ int fifo(int cache_capacity, int num_requests, std::vector<std::string> requestS
         }
         else{
             if(pos == -1){ // cache miss
-            cache.pop_back();
+            cache.erase(cache.begin());
             cache.push_back(requestSet[i]);
             num_misses++;
             }
@@ -78,7 +78,7 @@ int opt(int cache_capacity, int num_requests, std::vector<std::string> requestSe
                 std::vector<int> furthest_future;
                 for(int j = 0; j < cache.size(); j++){
                     bool found = false;
-                    for(int k = requestSet.size()-1; k > i; k--){
+                    for(int k = i+1; k < requestSet.size(); k++){
                         if(cache[j] == requestSet[k]){
                             furthest_future.push_back(k-i);
                             found = true;
@@ -90,8 +90,8 @@ int opt(int cache_capacity, int num_requests, std::vector<std::string> requestSe
                     }
                 }
                 int to_erase = 0;
-                for(int j = 0; j < furthest_future.size()-1; j++){
-                    if(furthest_future[to_erase] < furthest_future[j])to_erase = j;
+                for(int j = 1; j < furthest_future.size()-1; j++){
+                    if(furthest_future[j] < furthest_future[to_erase])to_erase = j;
                 }
             cache.erase(cache.begin() + to_erase);
             cache.push_back(requestSet[i]);
