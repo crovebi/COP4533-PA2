@@ -4,7 +4,7 @@ Programming Assignment 2: Greedy Algorithms by Sebastian Crovetto (51487318) & M
 ## Instructions for Completion
 In the COP4533-PA2 folder, run the commands:
 g++ src/cache.cpp -o cache and g++ tests/randomTestGen.cpp -o randomTestGen
-which build the executables for cache and generating random request sequences for testing,respectively.
+which build the executables for cache and generating random request sequences for testing, respectively.
 
 ## Running the Programs
 Run the cache simulator with: ./cache
@@ -22,8 +22,8 @@ The input format is:
 k m
 r1 r2 r3 ... rm
 where:
-k is the cache capacity
-m is the number of requests
+k is the cache capacity,
+m is the number of requests, and
 r1 ... rm are the request IDs
 
 Running ./cache produces example.out, which contains the number of cache misses for each eviction policy. The output file is overwritten each time the program is executed.
