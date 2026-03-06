@@ -78,7 +78,7 @@ int opt(int cache_capacity, int num_requests, std::vector<std::string> requestSe
                 std::vector<int> furthest_future;
                 for(int j = 0; j < cache.size(); j++){
                     bool found = false;
-                    for(int k = i+1; k < requestSet.size(); k++){
+                    for(int k = requestSet.size()-1; k > i; k--){
                         if(cache[j] == requestSet[k]){
                             furthest_future.push_back(k-i);
                             found = true;
